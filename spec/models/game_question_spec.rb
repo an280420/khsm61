@@ -35,5 +35,10 @@ RSpec.describe GameQuestion, type: :model do
     end
   end
 
-  
+  # тест на метод correct_answer_key (правильный ключ под буквой b)
+  context 'correct_answer_key' do
+    it 'should return right letter' do
+      expect(game_question.correct_answer_key).to eq('b')
+    end
+  end
 end
