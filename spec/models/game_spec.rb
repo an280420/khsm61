@@ -127,4 +127,31 @@ RSpec.describe Game, type: :model do
     level = game_w_questions.current_level
     expect(game_w_questions.previous_level).to eq(level - 1)
   end
+
+  # проверка действий при ответе на текущий вопрос
+  context '.answer_current_question!' do
+    it 'should return true' do
+      q = game_w_questions.current_game_question
+      correct_answer = q.correct_answer_key
+      expect(game_w_questions.answer_current_question!(correct_answer)).to eq(true)
+      expect(game_w_questions.status).to be(:in_progress)
+    end
+
+    it 'should return false' do
+      q = game_w_questions.current_game_question
+      correct_answer = q.correct_answer_key
+      no_correct_answer = %w[a b c d].detect { |i| i != correct_answer }
+      expect(game_w_questions.answer_current_question!(no_correct_answer)).to eq(false)
+      expect(game_w_questions.is_failed).to be(true)
+    end
+
+    it 'last answer' do
+      max_current_level = Question::QUESTION_LEVELS.max
+      game_w_questions.current_level = max_current_level
+      q = game_w_questions.current_game_question
+      correct_answer = q.correct_answer_key
+      expect(game_w_questions.answer_current_question!(correct_answer)).to eq(true)
+      expect(game_w_questions.user.balance).to be > 0
+    end
+  end
 end
