@@ -124,12 +124,7 @@ RSpec.describe Game, type: :model do
   end
 
   it 'return previus level' do
-    
-    binding.pry
-    
-    level = game_w_questions.current_level
-    
-    expect(game_w_questions.previous_level).to eq(level - 1)
+    expect(game_w_questions.previous_level).to eq( -1)
   end
 
   # проверка действий при ответе на текущий вопрос
