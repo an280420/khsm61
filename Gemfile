@@ -14,7 +14,7 @@ gem 'russian'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.3.13'
-  gem 'byebug'
+  gem 'pry'
 
   gem 'rspec-rails', '~> 3.4'
   gem 'factory_girl_rails'
