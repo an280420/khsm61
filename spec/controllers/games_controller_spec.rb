@@ -104,7 +104,7 @@ RSpec.describe GamesController, type: :controller do
       not_correct_answer = %w[a b c d].find { |i| i != correct_answer }
       put :answer, id: game_w_questions.id, letter: not_correct_answer
       game = assigns(:game)
-      expect(game.finished?).to be
+      expect(game.finished?).to eq(true)
       expect(flash[:alert]).to be
       expect(game.status).to eq(:fail)
     end
