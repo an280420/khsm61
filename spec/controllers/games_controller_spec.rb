@@ -101,10 +101,10 @@ RSpec.describe GamesController, type: :controller do
     it 'answer is not correct' do
       q = game_w_questions.current_game_question
       correct_answer = q.correct_answer_key
-      not_correct_answer = %w[a b c d].detect { |i| i != correct_answer }
+      not_correct_answer = %w[a b c d].find { |i| i != correct_answer }
       put :answer, id: game_w_questions.id, letter: not_correct_answer
       game = assigns(:game)
-      expect(game.finished?).to be_truthy
+      expect(game.finished?).to be
       expect(flash[:alert]).to be
       expect(game.status).to eq(:fail)
     end
