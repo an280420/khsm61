@@ -28,18 +28,25 @@ RSpec.describe GamesController, type: :controller do
       post :create
       game = assigns(:game)
       expect(game).to be_nil
+      expect(response).to redirect_to(new_user_session_path)
+      expect(flash[:alert]).to be
+
     end
 
     it 'can not #answer' do
       put :answer, id: game_w_questions.id, letter: game_w_questions.current_game_question.correct_answer_key
       game = assigns(:game)
       expect(game).to be_nil
+      expect(response).to redirect_to(new_user_session_path)
+      expect(flash[:alert]).to be
     end
 
     it 'can not #take_money' do
       put :take_money, id: game_w_questions.id
       game = assigns(:game)
       expect(game).to be_nil
+      expect(response).to redirect_to(new_user_session_path)
+      expect(flash[:alert]).to be
     end
   end
 
@@ -88,6 +95,18 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to redirect_to(game_path(game))
       # Флеш пустой
       expect(flash.empty?).to be_truthy
+    end
+
+    # игрок дает неверный ответ
+    it 'answer is not correct' do
+      q = game_w_questions.current_game_question
+      correct_answer = q.correct_answer_key
+      not_correct_answer = %w[a b c d].detect { |i| i != correct_answer }
+      put :answer, id: game_w_questions.id, letter: not_correct_answer
+      game = assigns(:game)
+      expect(game.finished?).to be_truthy
+      expect(flash[:alert]).to be
+      expect(game.status).to eq(:fail)
     end
 
     # проверка, что пользовтеля посылают из чужой игры
