@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   resources :games, only: [:create, :show] do
     put 'answer', on: :member # доп. метод ресурса - ответ на текущий вопро
     put 'take_money', on: :member # доп. метод ресурса - игрок берет деньги
+    put 'help', on: :member # помощь зала
+    put 'answer', on: :member
+    put 'take_money', on: :member
   end
 
   # Ресурс в единственном числе - ВопросЫ  для загрузки админом сразу пачки вопросОВ
