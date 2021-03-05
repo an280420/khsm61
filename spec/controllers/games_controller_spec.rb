@@ -30,7 +30,6 @@ RSpec.describe GamesController, type: :controller do
       expect(game).to be_nil
       expect(response).to redirect_to(new_user_session_path)
       expect(flash[:alert]).to be
-
     end
 
     it 'can not #answer' do
@@ -161,7 +160,7 @@ RSpec.describe GamesController, type: :controller do
       expect(game_w_questions.audience_help_used).to be_falsey
     
       # Пишем запрос в контроллер с нужным типом (put — не создаёт новых сущностей, но что-то меняет)
-      put :help, params: {id: game_w_questions.id, help_type: :audience_help}
+      put :help, id: game_w_questions.id, help_type: :audience_help
       game = assigns(:game)
     
       # Проверяем, что игра не закончилась, что флажок установился, и подсказка записалась
