@@ -95,6 +95,14 @@ class GameQuestion < ActiveRecord::Base
 
     save
   end
+
+  # добавляем в хэш подсказок массив из двух вариантов (случайный и правильный)
+  def add_fifty_fifty
+    self.help_hash[:fifty_fifty] = [
+      correct_answer_key,
+      (%w(a b c d) - [correct_answer_key]).sample
+    ]
+  end
   
   def apply_help!(help_type)
     case help_type.to_sym
