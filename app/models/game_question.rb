@@ -104,6 +104,17 @@ class GameQuestion < ActiveRecord::Base
     ]
   end
   
+  # Добавляем в help_hash подсказку друга и сохраняем объект
+  def add_friend_call
+    # Массив ключей
+    keys_to_use = keys_to_use_in_help
+
+    self.help_hash[:friend_call] =
+      GameHelpGenerator.friend_call(keys_to_use, correct_answer_key)
+
+    save
+  end
+
   def apply_help!(help_type)
     case help_type.to_sym
     when :fifty_fifty
