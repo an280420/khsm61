@@ -94,7 +94,7 @@ RSpec.describe GameQuestion, type: :model do
       expect(game_question.help_hash).to include(:friend_call)
       fc = game_question.help_hash[:friend_call]
       expect(fc).to include('считает, что это вариант')
-      expect(%w(a b c d)).to include(fc[-1].downcase)
+      expect(%w[a b c d]).to include(fc[-1].downcase)
     end
   end
 end
