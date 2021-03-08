@@ -102,6 +102,8 @@ class GameQuestion < ActiveRecord::Base
       correct_answer_key,
       (%w(a b c d) - [correct_answer_key]).sample
     ]
+
+    save
   end
   
   # Добавляем в help_hash подсказку друга и сохраняем объект
